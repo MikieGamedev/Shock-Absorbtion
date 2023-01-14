@@ -1,0 +1,101 @@
+//To use this script, you need to make an empty gameobject that is the sibling of your camera. Drag said gameobject into the "FollowOb" field.
+
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ShockAbsorption : MonoBehaviour
+{
+    [SerializeField] Transform FollowOb;
+    [SerializeField] GameObject LandOb;
+    [SerializeField] Animator HardLand;
+    [SerializeField] float ThisLerpSpeed = 6f;
+    [SerializeField] float FollowLerpSpeed = 7f;
+    [SerializeField] float YPos = .5f;
+    [SerializeField] float LeftSide = 5f;
+    [SerializeField] float RightSide = 5f;
+
+    [SerializeField] float Timer = 0.15f;
+    float timer;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        transform.localPosition = Vector3.Lerp(transform.localPosition, FollowOb.localPosition, ThisLerpSpeed * Time.deltaTime);
+        timer -= Time.deltaTime;
+        RaycastHit hit;
+
+        if (Physics.Raycast(transform.parent.transform.position, Vector3.down, out hit, 4f) && !Physics.Raycast(transform.parent.transform.position, Vector3.down, out hit, 1f) && FindObjectOfType<RigidbodyPlayerMovement>().rb.velocity.y < -0.2f)
+            timer = Timer;
+        if (timer > 0)
+            FollowOb.transform.localPosition = Vector3.Lerp(FollowOb.transform.localPosition, new Vector3(0, YPos * (GetComponentInParent<Rigidbody>().velocity.y * (24 / LeftSide)) / (96 / RightSide), 0), FollowLerpSpeed * Time.deltaTime);
+        if (timer < 0)
+            FollowOb.transform.localPosition = Vector3.Lerp(FollowOb.transform.localPosition, new Vector3(0, 0.6f, 0), FollowLerpSpeed * Time.deltaTime);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//lol why are you down here
